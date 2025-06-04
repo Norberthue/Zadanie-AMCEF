@@ -1,0 +1,26 @@
+import { data } from './transactions.js'
+
+const canceledTransactions = (transactions) => {
+  return transactions
+    .filter(data =>
+      data.state === "canceled" &&
+      data.amount &&
+      data.createdAt &&
+      data.customerName 
+    )
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .reduce((acc, item) => {
+      const year = item.year
+      
+      if (!acc[year]) {
+        acc[year] = []
+      }
+      
+      acc[year].push(item)
+      
+      return acc
+    }, {})
+}
+
+
+console.log(canceledTransactions(data))
